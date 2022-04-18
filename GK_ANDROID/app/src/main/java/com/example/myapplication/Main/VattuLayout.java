@@ -142,7 +142,7 @@ public class VattuLayout extends AppCompatActivity {
         vt_table_list.addView(tr);
         for (int k = 0; k < vtlist.size(); k++) {
             VatTu vatTu = vtlist.get(k);
-            if (vatTu.getMaVt().toLowerCase().trim().contains(toString.trim()) || vatTu.getTenVt().toLowerCase().contains(toString)) {
+            if (vatTu.getMaVt().toLowerCase().trim().contains(toString.trim().toLowerCase()) || vatTu.getTenVt().toLowerCase().contains(toString.toLowerCase())) {
 
                 tr = createRow(VattuLayout.this, vatTu);
 
@@ -672,7 +672,7 @@ public class VattuLayout extends AppCompatActivity {
 
                 if (!allowSameID)
                     if (mavt.equalsIgnoreCase(mavt_data.getText().toString())) {
-                        showMVTError.setText("Mã PK không được trùng ");
+                        showMVTError.setText("Mã VT không được trùng ");
                         showMVTError.setVisibility(View.VISIBLE);
                         return noError = false;
                     }
@@ -682,7 +682,7 @@ public class VattuLayout extends AppCompatActivity {
                         focusTenVT.getText().toString().trim()
                 )
                 ) {
-                    showTVTError.setText("Tên PK không được trùng");
+                    showTVTError.setText("Tên VT không được trùng");
                     showTVTError.setVisibility(View.VISIBLE);
                     return noError = false;
                 }

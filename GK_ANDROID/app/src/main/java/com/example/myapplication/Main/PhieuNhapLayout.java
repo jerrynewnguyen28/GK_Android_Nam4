@@ -134,7 +134,7 @@ public class PhieuNhapLayout extends AppCompatActivity {
         phieunhap_table_list.addView(tr);
         for (int k = 0; k < phieunhaplist.size(); k++) {
             PhieuNhap pn = phieunhaplist.get(k);
-            if (pn.getSoPhieu().toLowerCase().trim().contains(toString.trim()) || pn.getMaK().toLowerCase().contains(toString)) {
+            if (pn.getSoPhieu().toLowerCase().trim().contains(toString.trim().toLowerCase()) || pn.getMaK().toLowerCase().contains(toString.toLowerCase())) {
 
                 tr = createRow(PhieuNhapLayout.this, pn);
 

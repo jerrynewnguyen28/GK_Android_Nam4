@@ -23,6 +23,7 @@ import com.example.myapplication.R;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -106,7 +107,7 @@ public class PhongkhoLayout extends AppCompatActivity {
         phongkho_table_list.addView(tr);
         for (int k = 0; k < phongkholist.size(); k++) {
             PhongKho phongKho = phongkholist.get(k);
-            if (phongKho.getMapk().toLowerCase().trim().contains(toString.trim()) || phongKho.getTenpk().toLowerCase().contains(toString)) {
+            if (phongKho.getMapk().toLowerCase().trim().contains(toString.trim().toLowerCase()) || phongKho.getTenpk().toLowerCase().contains(toString.toLowerCase())) {
 
                 tr = createRow(PhongkhoLayout.this, phongKho);
 
