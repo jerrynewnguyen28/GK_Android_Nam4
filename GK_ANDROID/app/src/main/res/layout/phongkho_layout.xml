@@ -191,7 +191,7 @@
         android:gravity="center">
         <Button
             style="@style/Btn"
-            android:id="@+id/PK_navbar_phongban"
+            android:id="@+id/PK_navbar_phongkho"
             android:backgroundTint="@color/active_color"
             android:textColor="@color/black"
             android:text="@string/phong_kho"/>

@@ -206,8 +206,6 @@ public class VattuLayout extends AppCompatActivity {
     }
 
     public void setNavigation(){
-        // navVPP onclick none
-        // navPB
         navPK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -295,8 +293,6 @@ public class VattuLayout extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (indexofRow != -1) {
-                    // Test
-                    // Toast.makeText( VanphongphamLayout.this, focusRowID+"", Toast.LENGTH_LONG).show();
                     createDialog(R.layout.popup_vt);
                     // Control
                     setControlDialog();
@@ -353,8 +349,6 @@ public class VattuLayout extends AppCompatActivity {
             if (indexofRow != (int) row.getId())
                 row.setBackgroundColor(getResources().getColor(R.color.white));
         }
-//             Toast.makeText( PhongbanLayout.this, indexofRow+"", Toast.LENGTH_LONG).show();
-//        Toast.makeText(VanphongphamLayout.this, indexofRow + ":" + (int) list.getChildAt(indexofRow).getId() + "", Toast.LENGTH_LONG).show();
     }
 
     public void setEventTableRows(TableRow tr, TableLayout list) {
@@ -672,18 +666,18 @@ public class VattuLayout extends AppCompatActivity {
         if( noError ) {
             for (int i = 1; i < vt_table_list.getChildCount(); i++) {
                 TableRow tr = (TableRow) vt_table_list.getChildAt(i);
-                TextView mavpp_data = (TextView) tr.getChildAt(0);
-                TextView tenvpp_data = (TextView) tr.getChildAt(1);
+                TextView mavt_data = (TextView) tr.getChildAt(0);
+                TextView tenvt_data = (TextView) tr.getChildAt(1);
 
                 if (!allowSameID)
-                    if (mavt.equalsIgnoreCase(mavpp_data.getText().toString())) {
+                    if (mavt.equalsIgnoreCase(mavt_data.getText().toString())) {
                         showMVTError.setText("Mã PK không được trùng ");
                         showMVTError.setVisibility(View.VISIBLE);
                         return noError = false;
                     }
                 // Trường hợp chỉ đổi ảnh, những thông tin khác ngoại trừ tên thì phải đổi tên luôn à
-                if (tenvt.equalsIgnoreCase(tenvpp_data.getText().toString())
-                        && !tenvpp_data.getText().toString().equalsIgnoreCase(
+                if (tenvt.equalsIgnoreCase(tenvt_data.getText().toString())
+                        && !tenvt_data.getText().toString().equalsIgnoreCase(
                         focusTenVT.getText().toString().trim()
                 )
                 ) {

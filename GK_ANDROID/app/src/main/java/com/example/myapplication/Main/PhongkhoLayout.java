@@ -18,12 +18,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.myapplication.Databases.PhongKhoDatabase;
-import com.example.myapplication.Entities.NhanVien;
 import com.example.myapplication.Entities.PhongKho;
 import com.example.myapplication.R;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -141,7 +139,7 @@ public class PhongkhoLayout extends AppCompatActivity {
 
         PK_searchView = findViewById(R.id.PK_searchEdit);
 
-        navPK = findViewById(R.id.PK_navbar_phongban);
+        navPK = findViewById(R.id.PK_navbar_phongkho);
         navNV = findViewById(R.id.PK_navbar_nhanvien);
         navVT = findViewById(R.id.PK_navbar_VT);
         navCP= findViewById(R.id.PK_navbar_capphat);
@@ -154,8 +152,6 @@ public class PhongkhoLayout extends AppCompatActivity {
     }
 
     public void setNavigation(){
-        // navPB onclick none
-        // navNV
         navNV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,7 +162,6 @@ public class PhongkhoLayout extends AppCompatActivity {
 
             }
         });
-        // navVPP
         navVT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -327,7 +322,7 @@ public class PhongkhoLayout extends AppCompatActivity {
     }
 
     public void setEventDialog(View view) {
-        //  Toast.makeText( PhongbanLayout.this, (view.getId() == R.id.PB_editBtn)+"", Toast.LENGTH_LONG).show();
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -344,9 +339,9 @@ public class PhongkhoLayout extends AppCompatActivity {
         yesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //  showMPBError.setVisibility(View.VISIBLE);
-                //  showTPBError.setVisibility(View.VISIBLE);
-                //  showResult.setVisibility(View.VISIBLE);
+                  showMPKError.setVisibility(View.VISIBLE);
+                  showTPKError.setVisibility(View.VISIBLE);
+                  showResult.setVisibility(View.VISIBLE);
                 boolean success = false;
                 switch (view.getId()) {
                     case R.id.PK_insertBtn: {
@@ -424,11 +419,11 @@ public class PhongkhoLayout extends AppCompatActivity {
 
     public boolean isSafeDialog( boolean allowSameID ) {
         String id, mapk, tenpk;
-        // Mã PB không được trùng với Mã PB khác và ko để trống
+        // Mã PK không được trùng với Mã PK khác và ko để trống
         mapk = inputMaPK.getText().toString().trim();
         boolean noError = true;
         if (mapk.equals("")) {
-            showMPKError.setText("Mã PB không được trống ");
+            showMPKError.setText("Mã PK không được trống ");
             showMPKError.setVisibility(View.VISIBLE);
             noError = false;
         }else{
@@ -436,10 +431,10 @@ public class PhongkhoLayout extends AppCompatActivity {
             noError = true;
         }
 
-        // Tên PB không được để trống và không trùng
+        // Tên PK không được để trống và không trùng
         tenpk = inputTenPK.getText().toString().trim();
         if (tenpk.equals("")) {
-            showTPKError.setText("Tên PB không được trống ");
+            showTPKError.setText("Tên PK không được trống ");
             showTPKError.setVisibility(View.VISIBLE);
             noError = false;
         }else{
@@ -480,24 +475,24 @@ public class PhongkhoLayout extends AppCompatActivity {
     }
 
     // This Custom Columns' Max Width : 80 / 300
-    public TableRow createRow(Context context, PhongKho pb) {
+    public TableRow createRow(Context context, PhongKho pk) {
         TableRow tr = new TableRow(context);
         // Id
 
 
-        //   Ma PB
+        //   Ma PK
         TextView maPK = (TextView) getLayoutInflater().inflate(R.layout.tvtemplate, null);
-        // Cần cái này để khi mà maPB đạt tới max width thì nó sẽ tăng height cho bên tenPB luôn
+        // Cần cái này để khi mà maPK đạt tới max width thì nó sẽ tăng height cho bên tenPK luôn
         // Lưu ý!! : khi đặt LayoutParams thì phải theo thằng cố nội và phải có weight
         maPK.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.FILL_PARENT, 10.0f));
         maPK.setMaxWidth(DPtoPix(80));
-        maPK.setText(pb.getMapk());
+        maPK.setText(pk.getMapk());
 
-        //   Ten PB
+        //   Ten PK
         TextView tenPK = (TextView) getLayoutInflater().inflate(R.layout.tvtemplate, null);
-        // Cần cái này để khi mà tenPB đạt tới max width thì nó sẽ tăng height cho bên maPB luôn
+        // Cần cái này để khi mà tenPK đạt tới max width thì nó sẽ tăng height cho bên maPK luôn
         tenPK.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.FILL_PARENT, 10.0f));
-        tenPK.setText(pb.getTenpk());
+        tenPK.setText(pk.getTenpk());
         tenPK.setMaxWidth(DPtoPix(300));
 
         tr.setBackgroundColor(getResources().getColor(R.color.white));
