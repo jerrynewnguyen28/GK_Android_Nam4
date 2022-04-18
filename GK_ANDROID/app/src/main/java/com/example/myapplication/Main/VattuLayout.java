@@ -525,6 +525,7 @@ public class VattuLayout extends AppCompatActivity {
                         focusDVT = null;
                         focusGia = null;
                         success = true;
+                        vtlist = vattuDB.select();
                     }
                     break;
                     case R.id.VT_editBtn: {

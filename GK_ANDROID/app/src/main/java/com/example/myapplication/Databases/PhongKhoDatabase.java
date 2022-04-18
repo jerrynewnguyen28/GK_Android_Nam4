@@ -31,7 +31,7 @@ public class PhongKhoDatabase extends SQLiteOpenHelper {
     private static String DATABASE_PATH;
     public Context mContext;
     // Table name: Note.
-    public static final String TABLE_NAME = "PHONGBAN";
+    public static final String TABLE_NAME = "PHONGKHO";
 
     //public static final String COLUMN_ID ="ID";
     public static final String COLUMN_MAPK = "MAPK";

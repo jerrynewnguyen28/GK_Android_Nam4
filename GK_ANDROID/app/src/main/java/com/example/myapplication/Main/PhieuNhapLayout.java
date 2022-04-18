@@ -76,6 +76,7 @@ public class PhieuNhapLayout extends AppCompatActivity {
     String strDate;
 
     TextView showMPNError;
+    TextView showMPKError;
 
     TextView showResult;
     TextView showConfirm;
@@ -198,11 +199,11 @@ public class PhieuNhapLayout extends AppCompatActivity {
         }
         PK_spinner.setAdapter(loadSpinnerAdapter(PK_name));
 
-        ctphieunhaplist = ctphieunhapDB.select();
-        ArrayList<String> CTPN_ma = new ArrayList<>();
-        for (ChiTietPhieuNhap ctpn : ctphieunhaplist){
-            CTPN_ma.add(ctpn.getSoPhieu());
-        }
+//        ctphieunhaplist = ctphieunhapDB.select();
+//        ArrayList<String> CTPN_ma = new ArrayList<>();
+//        for (ChiTietPhieuNhap ctpn : ctphieunhaplist){
+//            CTPN_ma.add(ctpn.getSoPhieu());
+//        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -472,6 +473,7 @@ public class PhieuNhapLayout extends AppCompatActivity {
         setEventDatePicker();
 
         showMPNError = phieunhapdialog.findViewById(R.id.PN_showMPNError);
+        showMPKError = phieunhapdialog.findViewById(R.id.PN_showMPKError);
 
         showResult = phieunhapdialog.findViewById(R.id.PN_showResult);
         showConfirm = phieunhapdialog.findViewById(R.id.PN_showConfirm);
@@ -636,7 +638,7 @@ public class PhieuNhapLayout extends AppCompatActivity {
     }
 
     public boolean isSafeDialog(boolean allowSameID) {
-        String mapn, tennv;
+        String mapn, tenpk;
         // Mã PN không được trùng với Mã PN khác và ko để trống
         mapn = inputMaPN.getText().toString().trim();
         boolean noError = true;
@@ -648,6 +650,17 @@ public class PhieuNhapLayout extends AppCompatActivity {
             showMPNError.setVisibility(View.INVISIBLE);
             noError = true;
         }
+
+
+        if (PK_spinner_mini_maPK == null) {
+            showMPKError.setText("Mã PK không được trống ");
+            showMPKError.setVisibility(View.VISIBLE);
+            noError = false;
+        } else {
+            showMPKError.setVisibility(View.INVISIBLE);
+            noError = true;
+        }
+
         if (noError) {
             for (int i = 1; i < phieunhap_table_list.getChildCount(); i++) {
                 TableRow tr = (TableRow) phieunhap_table_list.getChildAt(i);

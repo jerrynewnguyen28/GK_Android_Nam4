@@ -359,6 +359,7 @@ public class PhongkhoLayout extends AppCompatActivity {
                         focusRow = null;
                         focusMaPK = null;
                         focusTenPK = null;
+                        phongkholist = phongkhoDB.select();
                     }
                     break;
                     case R.id.PK_editBtn: {
