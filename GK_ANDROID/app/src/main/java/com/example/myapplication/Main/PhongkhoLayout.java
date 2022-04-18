@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +18,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.myapplication.Databases.PhongKhoDatabase;
+import com.example.myapplication.Entities.NhanVien;
 import com.example.myapplication.Entities.PhongKho;
 import com.example.myapplication.R;
 
@@ -40,6 +43,8 @@ public class PhongkhoLayout extends AppCompatActivity {
     Button navVT;
     Button navCP;
 
+    List<PhongKho> phongkholist;
+
     // Dialog Layout
     Dialog phongkhodialog;
 
@@ -49,6 +54,8 @@ public class PhongkhoLayout extends AppCompatActivity {
 
     EditText inputMaPK;
     EditText inputTenPK;
+
+    EditText PK_searchView;
 
     TextView showMPKError;
     TextView showTPKError;
@@ -77,6 +84,40 @@ public class PhongkhoLayout extends AppCompatActivity {
         loadDatabase();
         setEvent();
         setNavigation();
+
+        PK_searchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) { filter(s.toString());}
+        });
+    }
+
+    private void filter(String toString) {
+        TableRow tr = (TableRow) phongkho_table_list.getChildAt(0);
+        int dem =0;
+        phongkho_table_list.removeAllViews();
+        phongkho_table_list.addView(tr);
+        for (int k = 0; k < phongkholist.size(); k++) {
+            PhongKho phongKho = phongkholist.get(k);
+            if (phongKho.getMapk().toLowerCase().trim().contains(toString.trim()) || phongKho.getTenpk().toLowerCase().contains(toString)) {
+
+                tr = createRow(PhongkhoLayout.this, phongKho);
+
+                tr.setId((int) dem++);
+                phongkho_table_list.addView(tr);
+                setEventTableRows(tr, phongkho_table_list);
+            }
+
+        }
     }
 
     // --------------- MAIN HELPER -----------------------------------------------------------------
@@ -97,6 +138,8 @@ public class PhongkhoLayout extends AppCompatActivity {
         editBtn = findViewById(R.id.PK_editBtn);
         delBtn = findViewById(R.id.PK_delBtn);
         exitBtn = findViewById(R.id.PK_exitBtn);
+
+        PK_searchView = findViewById(R.id.PK_searchEdit);
 
         navPK = findViewById(R.id.PK_navbar_phongban);
         navNV = findViewById(R.id.PK_navbar_nhanvien);
@@ -247,13 +290,13 @@ public class PhongkhoLayout extends AppCompatActivity {
     // Load from the Database to the Table Layout
     public void loadDatabase() {
         phongkhoDB = new PhongKhoDatabase(this);
-        List<PhongKho> list = new ArrayList<>();
+
         TableRow tr = null;
         setCursorWindowImageSize(100 * 1024* 1024);
-        list = phongkhoDB.select();
+        phongkholist = phongkhoDB.select();
         // Tag sẽ bắt đầu ở 1 vì phải cộng thêm thằng example đã có sẵn
-        for (int i = 0; i < list.size(); i++) {
-            tr = createRow(this, list.get(i));
+        for (int i = 0; i < phongkholist.size(); i++) {
+            tr = createRow(this, phongkholist.get(i));
             tr.setId((int) i + 1);
             phongkho_table_list.addView(tr);
         }

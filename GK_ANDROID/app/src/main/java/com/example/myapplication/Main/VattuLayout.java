@@ -14,6 +14,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.Databases.VatTuDatabase;
+import com.example.myapplication.Entities.NhanVien;
 import com.example.myapplication.Entities.VatTu;
 import com.example.myapplication.R;
 
@@ -115,6 +118,40 @@ public class VattuLayout extends AppCompatActivity {
         loadDatabase();
         setEvent();
         setNavigation();
+
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) { filter(s.toString());}
+        });
+    }
+
+    private void filter(String toString) {
+        TableRow tr = (TableRow) vt_table_list.getChildAt(0);
+        int dem =0;
+        vt_table_list.removeAllViews();
+        vt_table_list.addView(tr);
+        for (int k = 0; k < vtlist.size(); k++) {
+            VatTu vatTu = vtlist.get(k);
+            if (vatTu.getMaVt().toLowerCase().trim().contains(toString.trim()) || vatTu.getTenVt().toLowerCase().contains(toString)) {
+
+                tr = createRow(VattuLayout.this, vatTu);
+
+                tr.setId((int) dem++);
+                vt_table_list.addView(tr);
+                setEventTableRows(tr, vt_table_list);
+            }
+
+        }
     }
 
     public void setControl(){
@@ -619,7 +656,10 @@ public class VattuLayout extends AppCompatActivity {
 
         // Gia không được để trống và không chữ cái
         gia = inputGia.getText().toString().trim();
-        if( gia.charAt(0) == '0') if( gia.length() > 1) gia = gia.substring(1,gia.length()-1);
+        if (gia.length() > 1)
+        if( gia.charAt(0) == '0')
+        {if( gia.length() > 1)
+            {gia = gia.substring(1,gia.length()-1);}}
         if (gia.equals("")) {
             showGiaError.setText("Giá không được trống ");
             showGiaError.setVisibility(View.VISIBLE);
