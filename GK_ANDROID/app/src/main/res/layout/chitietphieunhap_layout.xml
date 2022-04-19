@@ -204,25 +204,54 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="30dp">
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="20dp">
+            <Button
+                android:id="@+id/CP_delBtn"
+                style="@style/Btn"
+                android:text="@string/xoa"
+                android:backgroundTint="#DD4545"
+                app:icon="@drawable/outline_delete_24"
+                app:iconGravity="textStart"
+                app:iconPadding="5dp"
+                app:iconTint="#000"
+                android:textColor="@color/black"
+                />
+            <Button
+                android:layout_marginLeft="5dp"
+                android:id="@+id/CP_editBtn"
+                style="@style/Btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sua"
+                android:textColor="#000"
+                android:backgroundTint="#3C7AD8"
+                app:icon="@drawable/outline_settings_24"
+                app:iconGravity="textStart"
+                app:iconPadding="5dp"
+                app:iconTint="#000"
+                />
             <TextView
                 android:id="@+id/CP_labelVT"
                 style="@style/textBlack"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:textSize="18dp"
-                android:text="VPP2:   Kéo"
+                android:textSize="17dp"
+                android:text="VPP2:Kéo"
+                android:layout_marginLeft="10dp"
                 />
             <Button
                 android:id="@+id/CP_previewVTBtn"
                 android:drawableLeft="@drawable/baseline_visibility_black_24"
                 style="@style/Btn"
-                android:paddingLeft="12dp"
+                android:paddingLeft="5dp"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
                 android:backgroundTint="#50E363"
                 android:layout_marginRight="5dp"/>
+
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/CP_tableAll2_container"
             android:layout_width="match_parent"
@@ -389,6 +418,7 @@
             android:layout_marginHorizontal="20dp"
             android:visibility="invisible"
             />
+
         <LinearLayout
             android:id="@+id/CP_tableIndex2_container"
             android:layout_width="match_parent"

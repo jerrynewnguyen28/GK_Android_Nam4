@@ -62,6 +62,15 @@
                     app:smsp_searchHeaderText="Phiếu nhập"
                     app:smsp_enableFloatingLabel="false"
                     app:smsp_hint="Chọn Phiếu nhập"/>
+                <TextView
+                    style="@style/textRed"
+                    android:id="@+id/CP_showPNError"
+                    android:visibility="invisible"
+                    android:layout_width="match_parent"
+                    android:text="@string/error_of_this_line"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    />
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="10dp"
@@ -83,6 +92,15 @@
                     app:smsp_searchHeaderText="Vật Tư"
                     app:smsp_enableFloatingLabel="false"
                     app:smsp_hint="Chọn Vật Tư"/>
+                <TextView
+                    style="@style/textRed"
+                    android:id="@+id/CP_showVTError"
+                    android:visibility="invisible"
+                    android:layout_width="match_parent"
+                    android:text="@string/error_of_this_line"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    />
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="10dp"
@@ -98,12 +116,13 @@
                 <EditText
                     android:id="@+id/CP_inputSLCP"
                     android:paddingLeft="10dp"
+                    android:inputType="number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
                 <TextView
                     style="@style/textRed"
-                    android:id="@+id/CP_showSLCPError"
+                    android:id="@+id/CP_showSLVTError"
                     android:visibility="invisible"
                     android:layout_width="match_parent"
                     android:text="@string/error_of_this_line"
@@ -178,7 +197,7 @@
             android:text="Hủy"/>
     </LinearLayout>
     <TextView
-        android:id="@+id/NV_showResult"
+        android:id="@+id/CP_showResult"
         android:visibility="invisible"
         android:layout_marginTop="10dp"
         style="@style/textBlack"
