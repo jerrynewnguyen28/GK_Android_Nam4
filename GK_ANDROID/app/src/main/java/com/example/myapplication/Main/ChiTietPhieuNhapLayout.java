@@ -11,6 +11,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,6 +42,10 @@ import java.util.List;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 public class ChiTietPhieuNhapLayout extends AppCompatActivity {
     public static PhongKho selectedPK = null;
@@ -149,6 +155,7 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
         loadDatabase();
         setEvent();
         setNavigation();
+        hideSystemUI();
     }
 
     // --------------- MAIN HELPER -----------------------------------------------------------------
@@ -1024,5 +1031,22 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
         return day + "/" + month + "/" + year; // [30,08,1999] -> 30/08/1999
     }
 
-
+    private void hideSystemUI() {
+        View decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                if(visibility == 0)
+                    decorView.setSystemUiVisibility(hideSystemUIBars());
+            }
+        });
+    }
+    private int hideSystemUIBars(){
+        return View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+    }
 }

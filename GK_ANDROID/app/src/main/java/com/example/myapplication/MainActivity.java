@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setControl();
         setEvent();
         setAnim();
+        hideSystemUI();
     }
 
     private void resetAll() {
@@ -139,5 +140,12 @@ public class MainActivity extends AppCompatActivity {
         cardView3.setVisibility(View.INVISIBLE);
         cardView4 = findViewById(R.id.cardView4);
         cardView4.setVisibility(View.INVISIBLE);
+    }
+
+    private void hideSystemUI() {
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 }

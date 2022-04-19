@@ -17,21 +17,6 @@
 
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
-<!--        <activity android:name=".Chart.ThongkeChart">-->
-<!--        </activity>-->
-<!--        <activity android:name=".Main.ThongbaoLayout" />-->
-<!--        <activity android:name=".XinchoLayout" />-->
-<!--        <activity android:name=".Tables.BaocaoTable02" />-->
-<!--        <activity android:name=".Tables.BaocaoTable01" />-->
-<!--        <activity android:name=".Statistics.BaocaoVPPAllLayout" />-->
-<!--        <activity android:name=".Statistics.BaocaoVPPLayout" />-->
-<!--        <activity android:name=".Tables.ThongkeTable04" />-->
-<!--        <activity android:name=".Tables.ThongkeTable03" />-->
-<!--        <activity android:name=".Tables.ThongkeTable02" />-->
-<!--        <activity android:name=".Tables.ThongkeTable01" />-->
-<!--        <activity android:name=".Main.ThongkeLayout" />-->
-<!--        <activity android:name=".Statistics.CapphatVPP2Layout" />-->
-<!--        <activity android:name=".Statistics.CapphatVPPLayout"></activity>-->
         <activity android:name=".Main.VattuLayout"></activity>
         <activity android:name=".Main.NhanvienLayout"></activity>
         <activity android:name=".Main.PhieuNhapLayout"></activity>

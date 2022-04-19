@@ -98,6 +98,7 @@ public class PhongkhoLayout extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) { filter(s.toString());}
         });
+        hideSystemUI();
     }
 
     private void filter(String toString) {
@@ -503,5 +504,24 @@ public class PhongkhoLayout extends AppCompatActivity {
         tr.addView(tenPK);
 
         return tr;
+    }
+
+    private void hideSystemUI() {
+        View decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                if(visibility == 0)
+                    decorView.setSystemUiVisibility(hideSystemUIBars());
+            }
+        });
+    }
+    private int hideSystemUIBars(){
+        return View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
     }
 }

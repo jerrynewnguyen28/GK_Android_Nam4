@@ -225,6 +225,7 @@ public class ChiTietPhieuNhapDatabase extends SQLiteOpenHelper {
                 results.add(cursor.getString(i));
             }
         }
+        cursor.close();
         return results;
     }
     public List<String> select_PN_CTPN_VT(String maPN){
