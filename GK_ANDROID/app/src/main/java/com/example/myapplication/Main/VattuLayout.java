@@ -629,7 +629,7 @@ public class VattuLayout extends AppCompatActivity {
             noError = false;
         }else{
             showTVTError.setVisibility(View.INVISIBLE);
-            noError = true;
+            if(noError)noError = true;
         }
 
         // dvt không được để trống và không chữ số
@@ -646,7 +646,7 @@ public class VattuLayout extends AppCompatActivity {
             noError = false;
         }else{
             showDVTError.setVisibility(View.INVISIBLE);
-            noError = true;
+            if(noError)noError = true;
         }
 
         // Gia không được để trống và không chữ cái
@@ -661,7 +661,7 @@ public class VattuLayout extends AppCompatActivity {
             noError = false;
         }else{
             showGiaError.setVisibility(View.INVISIBLE);
-            noError = true;
+            if(noError)noError = true;
         }
 
         if( noError ) {

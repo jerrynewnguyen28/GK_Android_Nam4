@@ -441,7 +441,7 @@ public class PhongkhoLayout extends AppCompatActivity {
             noError = false;
         }else{
             showTPKError.setVisibility(View.INVISIBLE);
-            noError = true;
+            if(noError)noError = true;
         }
 
         if( noError ) {

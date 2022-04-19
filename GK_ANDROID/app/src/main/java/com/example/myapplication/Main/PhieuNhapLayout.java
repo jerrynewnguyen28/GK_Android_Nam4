@@ -658,7 +658,7 @@ public class PhieuNhapLayout extends AppCompatActivity {
             noError = false;
         } else {
             showMPKError.setVisibility(View.INVISIBLE);
-            noError = true;
+            if(noError)noError = true;
         }
 
         if (noError) {
