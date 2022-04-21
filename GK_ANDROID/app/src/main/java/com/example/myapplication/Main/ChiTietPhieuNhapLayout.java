@@ -250,8 +250,8 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
                     // TABLE CP INDEX 02 ----------------------------------------------------------------------------------------
                     // Set text for noteVTLabel -------------------------------------------------------------------------
                     TextView tenVTView = (TextView) row.getChildAt(1);
-//                    noteVTLabel.setVisibility(View.VISIBLE);
-//                    noteVTLabel.setText(tenVTView.getText().toString().trim() + " được nhập kho bởi nhân viên dưới đây");
+                    noteVTLabel.setVisibility(View.VISIBLE);
+                    noteVTLabel.setText(tenVTView.getText().toString().trim() + " được nhập kho bởi phiếu nhập dưới đây");
                     // ----------------------------------------------------------------------------------------------------
                     TextView maVTView = (TextView) row.getChildAt(0);
                     for (TableRow row : rows) {
@@ -526,8 +526,8 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT)
                 );
-//                noteVTLabel = cp_tablesindex_container.findViewById(R.id.CP_noteVTLabel);
-//                noteVTLabel.setVisibility(View.INVISIBLE);
+                noteVTLabel = cp_tablesindex_container.findViewById(R.id.CP_noteVTLabel);
+                noteVTLabel.setVisibility(View.INVISIBLE);
                 createCPLayout_fromPK(maPK);
             }
             ;
@@ -566,16 +566,25 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
         rowGenarator.setSizeOfCell(sizeOfCell);
         rowGenarator.setIsCellPaddingZero(isPaddingZero);
         List<TableRow> rows = rowGenarator.generateArrayofRows();
-//        if (rows == null) {
-//            cp_totalCount.setText("0");
-//            cp_totalPrice.setText("0");
-//            return;
-//        }
+        if (rows == null) {
+            cp_totalCount.setText("0");
+            cp_totalPrice.setText("0");
+            return;
+        }
         for (TableRow row : rows) {
             cp_table1.addView(row);
-//            TextView totalpriceofVTView = (TextView) row.getChildAt(row.getChildCount() - 1);
-//            int totalpriceofVT = Integer.parseInt(totalpriceofVTView.getText().toString().trim());
-//            totalPrice += totalpriceofVT;
+            TextView totalpriceofVTView = (TextView) row.getChildAt(row.getChildCount() - 1);
+            int totalpriceofVT = 0;
+            for (int i = 0; i < vattu_list.size(); i++){
+                TextView slVTView = (TextView) row.getChildAt(0);
+                String mavt = slVTView.getText().toString().trim();
+                String mavtl = vattu_list.get(i).getMaVt().trim();
+                if (mavtl.equalsIgnoreCase(mavt)) {
+                    int slVT = Integer.parseInt(totalpriceofVTView.getText().toString().trim());
+                    totalpriceofVT = slVT * Integer.parseInt(vattu_list.get(i).getGiaNhap());
+                }
+            }
+            totalPrice += totalpriceofVT;
         }
         rowGenarator.setSizeOfCell(sizeOfCell2);
         rowGenarator.setIsCellPaddingZero(isPaddingZero2);
@@ -591,8 +600,8 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
                     // TABLE CP INDEX 02 ----------------------------------------------------------------------------------------
                     // Set text for noteVTLabel -------------------------------------------------------------------------
                     TextView tenVTView = (TextView) row.getChildAt(1);
-//                    noteVTLabel.setVisibility(View.VISIBLE);
-//                    noteVTLabel.setText(tenVTView.getText().toString().trim() + " được nhập kho bởi nhân viên dưới đây");
+                    noteVTLabel.setVisibility(View.VISIBLE);
+                    noteVTLabel.setText(tenVTView.getText().toString().trim() + " được nhập kho bởi phiếu nhập dưới đây");
                     // ----------------------------------------------------------------------------------------------------
                     TextView maVTView = (TextView) row.getChildAt(0);
                     for (TableRow row : rows) {
@@ -613,9 +622,9 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
             });
         }
 //        // CP_totalCount : Tổng số các VT được cấp
-//        cp_totalCount.setText((cp_table1.getChildCount() - 1) + "");
-//        // CP_totalPrice : Tổng số tiền VT  = số lượng loại VT mà NV mượn * số tiền của mỗi loại VT
-//        cp_totalPrice.setText(MoneyFormat(totalPrice));
+        cp_totalCount.setText((cp_table1.getChildCount() - 1) + "");
+//        // CP_totalPrice : Tổng số tiền VT  = số lượng loại VT mà PN nhập * số tiền của mỗi loại VT
+        cp_totalPrice.setText(MoneyFormat(totalPrice));
     }
 
     public String MoneyFormat(int money) {

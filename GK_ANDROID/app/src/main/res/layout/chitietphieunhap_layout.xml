@@ -361,7 +361,7 @@
                     <TextView
                         style="@style/tableHeader"
                         android:maxWidth="80dp"
-                        android:text="@string/tri_gia" />
+                        android:text="SL" />
                 </TableRow>
 
             </TableLayout>
@@ -412,7 +412,7 @@
         <TextView
             android:id="@+id/CP_noteVTLabel"
             style="@style/textRed"
-            android:text="VPP4 được cấp cho các nhân viên dưới đây"
+            android:text="VT! được nhập bởi phiếu nhập dưới đây"
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_marginHorizontal="20dp"
