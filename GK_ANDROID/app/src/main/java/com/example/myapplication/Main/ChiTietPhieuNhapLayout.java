@@ -308,8 +308,8 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
         phieunhap_list = phieunhapDB.select();
         chitietpnDB = new ChiTietPhieuNhapDatabase(ChiTietPhieuNhapLayout.this);
         chitietpn_list = chitietpnDB.select();
-        for (int i = 0; i < chitietpn_list.size(); i++) {
-            ChiTietPhieuNhap ctpn = chitietpn_list.get(i);
+        for (int i = 0; i < phieunhap_list.size(); i++) {
+
             PhieuNhap phieunhap = phieunhap_list.get(i);
             TableRow tr = createRow(ChiTietPhieuNhapLayout.this, phieunhap);
             tr.setId(i + 1);
@@ -919,6 +919,7 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
                             }
                         }else{
                             createCPLayout_fromPK(dataPK);
+                            table();
                         }
                         editBtn.setVisibility(View.INVISIBLE);
                         delBtn.setVisibility(View.INVISIBLE);

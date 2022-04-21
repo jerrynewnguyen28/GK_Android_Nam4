@@ -93,6 +93,7 @@ public class ChiTietPhieuNhapDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
+        db.close();
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -108,6 +109,7 @@ public class ChiTietPhieuNhapDatabase extends SQLiteOpenHelper {
 
         // Execute script.
         db.execSQL(script);
+        db.close();
     }
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -168,7 +170,7 @@ public class ChiTietPhieuNhapDatabase extends SQLiteOpenHelper {
                     cursor.getLong(2)
             ));
         }
-
+        db.close();
         return list_chitietcapphat;
     }
 
