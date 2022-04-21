@@ -203,14 +203,14 @@ public class ChiTietPhieuNhapDatabase extends SQLiteOpenHelper {
                 ,  new String[] { String.valueOf(chiTietPhieuNhap.getSoPhieu()) }
         );
     }
-    public long delete(VatTu vatTu){
+    public long delete(ChiTietPhieuNhap chiTietPhieuNhap){
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
         // db.delete ( Tên bàng, string các điều kiện lọc - dùng ? để xác định, string[] từng phần tử trong string[] sẽ nạp vào ? );
         return db.delete(
                 ChiTietPhieuNhapDatabase.TABLE_NAME
-                , PhieuNhapDatabase.COLUMN_SOPHIEU +"=?"
-                ,  new String[] { String.valueOf(vatTu.getMaVt()) }
+                , ChiTietPhieuNhapDatabase.COLUMN_SOPHIEU +"=?" + " AND " +ChiTietPhieuNhapDatabase.COLUMN_MAVT +"=?"
+                ,  new String[] { String.valueOf(chiTietPhieuNhap.getSoPhieu()), String.valueOf(chiTietPhieuNhap.getMaVT()) }
         );
     }
     public long deleteAll(){
@@ -257,6 +257,21 @@ public class ChiTietPhieuNhapDatabase extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sql, null);
         return getListResult(cursor);
     }
+
+    public List<String> selectVT_IndexPKForInsert(String maPK, String sophieu, String mavt){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT DISTINCT  VATTU.MAVT, VATTU.TENVT, VATTU.DVT, SUM(CHITIETCAPPHAT.SOLUONG) AS TONGSL FROM \n"
+                + "CHITIETCAPPHAT, VATTU, CAPPHAT"
+                + " WHERE VATTU.MAVT = CHITIETCAPPHAT.MAVT AND \n" +
+                "CHITIETCAPPHAT.SOPHIEU = CAPPHAT.SOPHIEU\n" +
+                "AND CAPPHAT.MAK = '" + maPK + "' AND CHITIETCAPPHAT.SOPHIEU = '"+ sophieu
+                +"' AND CHITIETCAPPHAT.MAVT = '" + mavt+
+                "' GROUP BY VATTU.MAVT"
+                ;
+        Cursor cursor = db.rawQuery(sql, null);
+        return getListResult(cursor);
+    }
+
     public List<String> selectSP_IndexPK(String maPK, String maVT){
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT CHITIETCAPPHAT.SOPHIEU, CAPPHAT.NGAYLAP\n" +

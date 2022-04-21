@@ -172,12 +172,16 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) { filter(s.toString()); }
+            public void afterTextChanged(Editable s) {
+                if(dataMaPKSpinner.equalsIgnoreCase("All"))
+                    filterALL(s.toString());
+                else if(!dataMaPKSpinner.equalsIgnoreCase("All"))filterIndex(s.toString(), dataMaPKSpinner);
+            }
         });
         hideSystemUI();
     }
 
-    private void filter(String toString) {
+    private void filterALL(String toString) {
         Rows rowGenarator = new Rows(this);
         TableLayout pn_table1 = cp_tablectpn_list;
         pn_table1.removeViews(1, pn_table1.getChildCount() - 1);
@@ -207,6 +211,67 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
         }
     }
 
+    private void filterIndex(String toString, String maPK) {
+        Rows rowGenarator = new Rows(this);
+        TableLayout cp_table1 = cp_tablesindex_container.findViewById(R.id.CP_tableVT);
+        cp_table1.removeViews(1, cp_table1.getChildCount() - 1);
+        int[] sizeOfCell = {85, 180, 50, 80};
+        boolean[] isPaddingZero = {false, true, true, true};
+        TableLayout cp_table2 = cp_tablesindex_container.findViewById(R.id.CP_tableSP);
+        cp_table2.removeViews(1, cp_table2.getChildCount() - 1);
+        int[] sizeOfCell2 = {90, 240};
+        boolean[] isPaddingZero2 = {false, false};
+        // Create List<TableRow> for TableList
+        // TABLE CP INDEX 01 ----------------------------------------------------------------------------------------
+        rowGenarator.setData(rowGenarator.enhanceRowData(chitietpnDB.selectVT_IndexPK(maPK), 4));
+        rowGenarator.setSizeOfCell(sizeOfCell);
+        rowGenarator.setIsCellPaddingZero(isPaddingZero);
+        List<TableRow> rows = rowGenarator.generateArrayofRows();
+        for (TableRow row : rows) {
+
+            TextView mavt = (TextView) row.getChildAt(0);
+            String mavttxt = mavt.getText().toString();
+            TextView tenvt = (TextView) row.getChildAt(1);
+            String tenvttxt = tenvt.getText().toString();
+            if (mavttxt.toLowerCase().contains(toString.toLowerCase())
+                    || tenvttxt.toLowerCase().contains(toString.toLowerCase())) {
+
+                cp_table1.addView(row);
+            }
+        }
+        for (int i = 1; i < cp_table1.getChildCount(); i++) {
+            TableRow row = (TableRow) cp_table1.getChildAt(i);
+
+            // Từ thằng VT được bấm gen ra thằng nhân viên đã mượn nó
+            row.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int dem = v.getId();
+                    // TABLE CP INDEX 02 ----------------------------------------------------------------------------------------
+                    // Set text for noteVTLabel -------------------------------------------------------------------------
+                    TextView tenVTView = (TextView) row.getChildAt(1);
+//                    noteVTLabel.setVisibility(View.VISIBLE);
+//                    noteVTLabel.setText(tenVTView.getText().toString().trim() + " được nhập kho bởi nhân viên dưới đây");
+                    // ----------------------------------------------------------------------------------------------------
+                    TextView maVTView = (TextView) row.getChildAt(0);
+                    for (TableRow row : rows) {
+                        row.setBackgroundColor(getResources().getColor(R.color.white));
+                    }
+                    row.setBackgroundColor(getResources().getColor(R.color.selectedColor));
+                    rowGenarator.setData(rowGenarator.enhanceRowData(
+                            chitietpnDB.selectSP_IndexPK(
+                                    maPK,
+                                    maVTView.getText().toString().trim()
+                            ), 2));
+                    cp_table2.removeViews(1, cp_table2.getChildCount() - 1);
+                    List<TableRow> rows2 = rowGenarator.generateArrayofRows();
+                    for (TableRow row2 : rows2) {
+                        cp_table2.addView(row2);
+                    }
+                }
+            });
+        }
+    }
     // --------------- MAIN HELPER -----------------------------------------------------------------
     public void setControl() {
 //        Log.d("process", "setControl");
@@ -271,24 +336,6 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
 
         for (TableRow row : rows) {
             pn_table1.addView(row);
-        }
-        for (int i = 1; i < pn_table1.getChildCount(); i++) {
-            TableRow row = (TableRow) pn_table1.getChildAt(i);
-//            row.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    for( TableRow row : rows) {
-//                        row.setBackgroundColor(getResources().getColor(R.color.white));
-//                    }
-//                    v.setBackgroundColor(getResources().getColor(R.color.selectedColor));
-//                    focusMaPN = (TextView) row.getChildAt(0);
-//                    String sptxt = focusMaPN.getText().toString();
-//                    TextView mavt = (TextView) row.getChildAt(1);
-//                    String mavttxt = mavt.getText().toString();
-//                    setEventTableRowsHelper(cp_tablepn_list);
-//                    setEventDisplayVT(mavttxt);
-//                }
-//            });
             SetEventTableRows(row, pn_table1);
         }
     }
@@ -319,16 +366,18 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
                         row.setBackgroundColor(getResources().getColor(R.color.white));
                     }
                     v.setBackgroundColor(getResources().getColor(R.color.selectedColor));
+                    focusSL = (TextView) tr.getChildAt(4);
                     focusMaPN = (TextView) tr.getChildAt(0);
-                    String sptxt = focusMaPN.getText().toString();
-                    TextView mavt = (TextView) tr.getChildAt(1);
-                    String mavttxt = mavt.getText().toString();
+                    focusTenVT = (TextView) tr.getChildAt(2);
+                    focusMaVT = (TextView) tr.getChildAt(1);
+                    String mavttxt = focusMaVT.getText().toString();
                     setEventTableRowsHelper(cp_tablepn_list);
                     setEventDisplayVT(mavttxt);
                 }
             });
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setEventTable(TableLayout list) {
         // Log.d("count", list.getChildCount()+""); // số table rows + 1
@@ -349,6 +398,67 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
                 // Event
                 strDate = formatDate(InttoStringDate(30, 8, 1999), true);
                 setEventDialog(v);
+            }
+        });
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDialog(R.layout.popup_chitietphieunhap);
+                // Control
+                setControlDialog();
+                setEventDialog(v);
+                showLabel.setText("Sửa CTPN");
+                showConfirm.setText("Bạn có muốn sửa hàng này không?");
+
+                inputSLVT.setText(focusSL.getText());
+                int pn = 0, vt = 0;
+                for (int i = 0; i < chitietpn_list.size(); i++){
+                    if (chitietpn_list.get(i).getSoPhieu().equalsIgnoreCase(focusMaPN.getText().toString().trim())){
+                        pn = i;break;
+                    }
+                }
+                for (int i = 0; i < vattu_list.size(); i++){
+                    String mavtl = vattu_list.get(i).getMaVt().trim();
+                    String mavt = focusMaVT.getText().toString().trim();
+                    if (mavtl.equalsIgnoreCase(mavt)){
+                        vt = i;break;
+                    }
+                }
+                PN_spinner_mini.setSelection(pn);
+                VT_spinner_mini.setSelection(vt);
+                PN_spinner_mini.setEnabled(false);
+                VT_spinner_mini.setEnabled(false);
+            }
+        });
+        delBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDialog(R.layout.popup_chitietphieunhap);
+                // Control
+                setControlDialog();
+                setEventDialog(v);
+                showLabel.setText("Xóa CTPN");
+                showConfirm.setText("Bạn có muốn xóa hàng này không?");
+
+                inputSLVT.setText(focusSL.getText());
+                int pn = 0, vt = 0;
+                for (int i = 0; i < chitietpn_list.size(); i++){
+                    if (chitietpn_list.get(i).getSoPhieu().equalsIgnoreCase(focusMaPN.getText().toString().trim())){
+                        pn = i;break;
+                    }
+                }
+                for (int i = 0; i < vattu_list.size(); i++){
+                    String mavtl = vattu_list.get(i).getMaVt().trim();
+                    String mavt = focusMaVT.getText().toString().trim();
+                    if (mavtl.equalsIgnoreCase(mavt)){
+                        vt = i;break;
+                    }
+                }
+                PN_spinner_mini.setSelection(pn);
+                VT_spinner_mini.setSelection(vt);
+                PN_spinner_mini.setEnabled(false);
+                VT_spinner_mini.setEnabled(false);
+                inputSLVT.setEnabled(false);
             }
         });
     }
@@ -574,8 +684,6 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
 //        Toast.makeText(CapphatVTLayout.this, indexofRow + ":" + (int) list.getChildAt(indexofRow).getId() + "", Toast.LENGTH_LONG).show();
     }
 
-
-
     public int findMaPNinTableCTPN(TableLayout list) {
         TableRow tr = null;
         TextView maPN = null;
@@ -597,6 +705,7 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
         }
         return null;
     }
+
     public PhieuNhap findMaPKinTablePN(String maPN){
         for (PhieuNhap pn : phieunhap_list){
             if (pn.getSoPhieu().trim().equalsIgnoreCase(maPN)){
@@ -605,6 +714,7 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
         }
         return null;
     }
+
     public ChiTietPhieuNhap findVTinListCTPN(String maPN, String maVT) {
         for (ChiTietPhieuNhap ctpn : chitietpn_list) {
             if (ctpn.getSoPhieu().trim().equalsIgnoreCase(maPN) && ctpn.getMaVT().trim().equalsIgnoreCase(maVT))
@@ -686,6 +796,7 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
             }
         });
     }
+
     public VatTu findVTinListCTPN (String maVT ){
         for( VatTu vt : vattu_list){
             if( vt.getMaVt().trim().equalsIgnoreCase( maVT ))
@@ -706,7 +817,7 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
         PN_spinner_mini.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                PN_spinner_mini_maPN = phieunhap_list.get(position).getSoPhieu();
+                PN_spinner_mini_maPN = phieunhap_list.get(position).getSoPhieu().trim();
 //                Toast.makeText( NhanvienLayout.this, PB_spinner_mini_maPB+"", Toast.LENGTH_LONG).show();
             }
 
@@ -718,7 +829,7 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
         VT_spinner_mini.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                VT_spinner_mini_maVT = vattu_list.get(position).getMaVt();
+                VT_spinner_mini_maVT = vattu_list.get(position).getMaVt().trim();
             }
 
             @Override
@@ -787,25 +898,66 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
                     case R.id.CP_insertBtn:{
                         if(!isSafeDialog(false))break;
                         ChiTietPhieuNhap ctpn = new ChiTietPhieuNhap(PN_spinner_mini_maPN.trim(), VT_spinner_mini_maVT.trim()
-                                , Long.valueOf(inputSLVT.getText().toString()));
-                        VatTu vt = findVTinListVT(VT_spinner_mini_maVT);
+                                , Long.valueOf(inputSLVT.getText().toString().trim()));
+
                         if(chitietpnDB.insert(ctpn) == -1)break;
-                        int n = cp_tablectpn_list.getChildCount();
-                        TableRow tr = createRow(ChiTietPhieuNhapLayout.this, vt, ctpn);
-                        tr.setId(n);
+
                         String maPK = findMaPKinTablePN(PN_spinner_mini_maPN.trim()).getMaK().trim();
                         String dataPK = dataMaPKSpinner.trim();
-                        if(!findMaPKinTablePN(PN_spinner_mini_maPN.trim()).getMaK().trim().equalsIgnoreCase(dataMaPKSpinner.trim())){
-                            if (dataMaPKSpinner.trim().equalsIgnoreCase("All")){
-                                cp_tablectpn_list.addView(tr);
-                                SetEventTableRows((TableRow) cp_tablectpn_list.getChildAt(n), cp_tablectpn_list);
+                        if(!maPK.equalsIgnoreCase(dataPK)){
+                            if (dataPK.equalsIgnoreCase("All")){
+                                table();
                             }
                         }else{
-
+                            createCPLayout_fromPK(dataPK);
                         }
                         editBtn.setVisibility(View.INVISIBLE);
                         delBtn.setVisibility(View.INVISIBLE);
                         previewVTBtn.setVisibility(View.INVISIBLE);
+
+                        success = true;
+                    }
+                        break;
+                    case R.id.CP_editBtn: {
+                        if (!isSafeDialog(true)) break;
+                        ChiTietPhieuNhap ctpn = new ChiTietPhieuNhap(PN_spinner_mini_maPN.trim(),
+                                VT_spinner_mini_maVT.trim(), Long.valueOf(inputSLVT.getText().toString().trim()));
+                        if (chitietpnDB.update(ctpn) == -1) break;
+                        String maPK = findMaPKinTablePN(PN_spinner_mini_maPN.trim()).getMaK().trim();
+                        String dataPK = dataMaPKSpinner.trim();
+                        if (!maPK.equalsIgnoreCase(dataPK)) {
+                            if (dataPK.equalsIgnoreCase("All")) {
+                                table();
+                            }
+                        } else {
+                            createCPLayout_fromPK(dataPK);
+                        }
+                        editBtn.setVisibility(View.INVISIBLE);
+                        delBtn.setVisibility(View.INVISIBLE);
+                        previewVTBtn.setVisibility(View.INVISIBLE);
+
+                        success = true;
+                    }
+                        break;
+                    case R.id.CP_delBtn: {
+
+                        ChiTietPhieuNhap ctpn = new ChiTietPhieuNhap(PN_spinner_mini_maPN.trim(),
+                                VT_spinner_mini_maVT.trim(), Long.valueOf(inputSLVT.getText().toString().trim()));
+                        if (chitietpnDB.delete(ctpn) == -1) break;
+                        String maPK = findMaPKinTablePN(PN_spinner_mini_maPN.trim()).getMaK().trim();
+                        String dataPK = dataMaPKSpinner.trim();
+                        if (!maPK.equalsIgnoreCase(dataPK)) {
+                            if (dataPK.equalsIgnoreCase("All")) {
+                                table();
+                            }
+                        } else {
+                            createCPLayout_fromPK(dataPK);
+                        }
+                        editBtn.setVisibility(View.INVISIBLE);
+                        delBtn.setVisibility(View.INVISIBLE);
+                        previewVTBtn.setVisibility(View.INVISIBLE);
+
+                        success = true;
                     }
                     break;
 
