@@ -22,7 +22,7 @@ public class PhongKhoDatabase extends SQLiteOpenHelper {
     private static final String TAG = "SQLite";
 
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
 
     // Database Name
     private static final String DATABASE_NAME = "GiuaKi.db";
@@ -105,7 +105,14 @@ public class PhongKhoDatabase extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.setVersion(oldVersion);
     }
-
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        if (!db.isReadOnly()) {
+            // Enable foreign key constraints
+            db.execSQL("PRAGMA foreign_keys=ON;");
+        }
+    }
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Script to create table.
@@ -155,13 +162,13 @@ public class PhongKhoDatabase extends SQLiteOpenHelper {
                 sortOrder               // The sort order
         );
 
-        List<PhongKho> list_phongban = new ArrayList<>();
+        List<PhongKho> list_phongkho = new ArrayList<>();
 
         while (cursor.moveToNext()) {
-            list_phongban.add(new PhongKho(
+            list_phongkho.add(new PhongKho(
                     cursor.getString(0), cursor.getString(1)));
         }
-        return list_phongban;
+        return list_phongkho;
     }
 
     public long insert(PhongKho phongKho) {
@@ -176,20 +183,20 @@ public class PhongKhoDatabase extends SQLiteOpenHelper {
         return db.insert(PhongKhoDatabase.TABLE_NAME, null, values);
     }
 
-    public long update(PhongKho phongban) {
+    public long update(PhongKho phongKho) {
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(PhongKhoDatabase.COLUMN_MAPK, phongban.getMapk());
-        values.put(PhongKhoDatabase.COLUMN_TENPK, phongban.getTenpk());
+        values.put(PhongKhoDatabase.COLUMN_MAPK, phongKho.getMapk());
+        values.put(PhongKhoDatabase.COLUMN_TENPK, phongKho.getTenpk());
 
         // db.update ( Tên bảng, tập giá trị mới, điều kiện lọc, tập giá trị cho điều kiện lọc );
         return db.update(
                 PhongKhoDatabase.TABLE_NAME
                 , values
                 , PhongKhoDatabase.COLUMN_MAPK + "=?"
-                , new String[]{String.valueOf(phongban.getMapk())}
+                , new String[]{String.valueOf(phongKho.getMapk())}
         );
     }
 

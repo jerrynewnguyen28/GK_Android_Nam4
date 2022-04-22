@@ -22,7 +22,7 @@ public class VatTuDatabase extends SQLiteOpenHelper {
     private static final String TAG = "SQLite";
 
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
 
     // Database Name
     private static final String DATABASE_NAME = "GiuaKi.db";
@@ -103,7 +103,14 @@ public class VatTuDatabase extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.setVersion(oldVersion);
     }
-
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        if (!db.isReadOnly()) {
+            // Enable foreign key constraints
+            db.execSQL("PRAGMA foreign_keys=ON;");
+        }
+    }
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Script to create table.
@@ -181,49 +188,49 @@ public class VatTuDatabase extends SQLiteOpenHelper {
         return list_vattu;
     }
 
-    public long insert(VatTu vanPhongPham){
+    public long insert(VatTu vatTu){
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(COLUMN_MAVT, vanPhongPham.getMaVt());
-        values.put(COLUMN_TENVT, vanPhongPham.getTenVt());
-        values.put(COLUMN_DVT, vanPhongPham.getDvt());
-        values.put(COLUMN_GIANHAP, vanPhongPham.getGiaNhap());
-        values.put(COLUMN_HINH, vanPhongPham.getHinh());
+        values.put(COLUMN_MAVT, vatTu.getMaVt());
+        values.put(COLUMN_TENVT, vatTu.getTenVt());
+        values.put(COLUMN_DVT, vatTu.getDvt());
+        values.put(COLUMN_GIANHAP, vatTu.getGiaNhap());
+        values.put(COLUMN_HINH, vatTu.getHinh());
 
         // Insert the new row, returning the primary key value of the new row
         return db.insert(TABLE_NAME, null, values);
     }
 
-    public long update(VatTu vanPhongPham){
+    public long update(VatTu vatTu){
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_MAVT, vanPhongPham.getMaVt());
-        values.put(COLUMN_TENVT, vanPhongPham.getTenVt());
-        values.put(COLUMN_DVT, vanPhongPham.getDvt());
-        values.put(COLUMN_GIANHAP, vanPhongPham.getGiaNhap());
-        values.put(COLUMN_HINH, vanPhongPham.getHinh());
+        values.put(COLUMN_MAVT, vatTu.getMaVt());
+        values.put(COLUMN_TENVT, vatTu.getTenVt());
+        values.put(COLUMN_DVT, vatTu.getDvt());
+        values.put(COLUMN_GIANHAP, vatTu.getGiaNhap());
+        values.put(COLUMN_HINH, vatTu.getHinh());
 
         // db.update ( Tên bảng, tập giá trị mới, điều kiện lọc, tập giá trị cho điều kiện lọc );
         return db.update(
                 VatTuDatabase.TABLE_NAME
                 , values
                 , VatTuDatabase.COLUMN_MAVT +"=?"
-                ,  new String[] { String.valueOf(vanPhongPham.getMaVt()) }
+                ,  new String[] { String.valueOf(vatTu.getMaVt()) }
         );
     }
-    public long delete(VatTu vanPhongPham){
+    public long delete(VatTu vatTu){
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
         // db.delete ( Tên bàng, string các điều kiện lọc - dùng ? để xác định, string[] từng phần tử trong string[] sẽ nạp vào ? );
         return db.delete(
                 VatTuDatabase.TABLE_NAME
                 ,VatTuDatabase.COLUMN_MAVT +"=?"
-                ,  new String[] { String.valueOf(vanPhongPham.getMaVt()) }
+                ,  new String[] { String.valueOf(vatTu.getMaVt()) }
         );
     }
     public long deleteAll(){

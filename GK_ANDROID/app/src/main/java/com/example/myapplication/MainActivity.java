@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        resetAll();
+        //resetAll();
         setControl();
         setEvent();
         setAnim();
@@ -35,16 +35,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void resetAll() {
         PhongKhoDatabase pkDB = new PhongKhoDatabase(this);
-        NhanVienDatabase nvDB = new NhanVienDatabase(this);
+//        NhanVienDatabase nvDB = new NhanVienDatabase(this);
         VatTuDatabase vtDB = new VatTuDatabase(this);
         PhieuNhapDatabase cpDB = new PhieuNhapDatabase(this);
         ChiTietPhieuNhapDatabase ctcpDB = new ChiTietPhieuNhapDatabase(this);
 
         pkDB.reset();
-        vtDB.reset();
-        nvDB.reset();
+//        nvDB.reset();
         cpDB.reset();
+        vtDB.reset();
         ctcpDB.reset();
+
+
     }
     private void setEvent() {
         cardView1.setOnClickListener(new View.OnClickListener() {

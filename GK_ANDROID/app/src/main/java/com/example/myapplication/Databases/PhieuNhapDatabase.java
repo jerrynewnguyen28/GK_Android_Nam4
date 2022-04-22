@@ -25,7 +25,7 @@ public class PhieuNhapDatabase extends SQLiteOpenHelper {
     private static final String TAG = "SQLite";
 
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
 
     // Database Name
     private static final String DATABASE_NAME = "GiuaKi.db";
@@ -38,7 +38,7 @@ public class PhieuNhapDatabase extends SQLiteOpenHelper {
 
     public static final String COLUMN_SOPHIEU ="SOPHIEU";
     public static final String COLUMN_NGAYCAP = "NGAYLAP";
-    public static final String COLUMN_MAK = "MAK";
+    public static final String COLUMN_MAK = "MAPK";
 
 
     public PhieuNhapDatabase(Context context)  {
@@ -98,6 +98,14 @@ public class PhieuNhapDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
     @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        if (!db.isReadOnly()) {
+            // Enable foreign key constraints
+            db.execSQL("PRAGMA foreign_keys=ON;");
+        }
+    }
+    @Override
     public void onCreate(SQLiteDatabase db) {
         // Script to create table.
         String script = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
@@ -105,7 +113,9 @@ public class PhieuNhapDatabase extends SQLiteOpenHelper {
                 + COLUMN_SOPHIEU + " TEXT PRIMARY KEY,"
                 + COLUMN_NGAYCAP + " TEXT NOT NULL,"
                 + COLUMN_MAK + " TEXT NOT NULL,"
-                + "FOREIGN KEY("+COLUMN_MAK+") REFERENCES PHONGKHO("+COLUMN_MAK+") );";
+                + "FOREIGN KEY("+COLUMN_MAK+") REFERENCES PHONGKHO("+COLUMN_MAK+")"
+                + "ON UPDATE RESTRICT "
+                + "ON DELETE RESTRICT );";
 
         // Execute script.
         db.execSQL(script);

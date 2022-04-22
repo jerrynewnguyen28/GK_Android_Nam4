@@ -186,8 +186,7 @@ public class PhieuNhapLayout extends AppCompatActivity {
         phieunhaplist = phieunhapDB.select();
         // Tag sẽ bắt đầu ở 1 vì phải cộng thêm thằng example đã có sẵn
         for (int i = 0; i < phieunhaplist.size(); i++) {
-            Log.d("data", phieunhaplist.get(i).toString());
-            tr = createRow(this, phieunhaplist.get(i));
+            tr = createRow(PhieuNhapLayout.this, phieunhaplist.get(i));
             tr.setId((int) i + 1);
             phieunhap_table_list.addView(tr);
         }
@@ -200,11 +199,6 @@ public class PhieuNhapLayout extends AppCompatActivity {
         }
         PK_spinner.setAdapter(loadSpinnerAdapter(PK_name));
 
-//        ctphieunhaplist = ctphieunhapDB.select();
-//        ArrayList<String> CTPN_ma = new ArrayList<>();
-//        for (ChiTietPhieuNhap ctpn : ctphieunhaplist){
-//            CTPN_ma.add(ctpn.getSoPhieu());
-//        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -734,7 +728,7 @@ public class PhieuNhapLayout extends AppCompatActivity {
         TextView maPN = (TextView) getLayoutInflater().inflate(R.layout.tvtemplate, null);
 
         maPN.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.FILL_PARENT, 10.0f));
-        maPN.setMaxWidth(DPtoPix(80));
+        maPN.setMaxWidth(DPtoPix(100));
         maPN.setPadding(0, 0, 0, 0);
         maPN.setText(pn.getSoPhieu());
 
@@ -744,13 +738,10 @@ public class PhieuNhapLayout extends AppCompatActivity {
 
         ngayLapPN.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.FILL_PARENT, 10.0f));
         ngayLapPN.setPadding(0, 0, 0, 0);
-        ngayLapPN.setMaxWidth(DPtoPix(300));
+        ngayLapPN.setMaxWidth(DPtoPix(200));
         ngayLapPN.setText(formatDate(pn.getNgayLap(), false));
 
         tr.setBackgroundColor(getResources().getColor(R.color.white));
-        //  Mã PN
-        tr.setTag(pn.getMaK() + "");
-
         tr.addView(maPN);
         tr.addView(ngayLapPN);
 

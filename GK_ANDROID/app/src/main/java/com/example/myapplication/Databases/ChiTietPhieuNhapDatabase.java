@@ -23,7 +23,7 @@ public class ChiTietPhieuNhapDatabase extends SQLiteOpenHelper {
     private static final String TAG = "SQLite";
 
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
 
     // Database Name
     private static final String DATABASE_NAME = "GiuaKi.db";
@@ -93,7 +93,14 @@ public class ChiTietPhieuNhapDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
-        db.close();
+    }
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        if (!db.isReadOnly()) {
+            // Enable foreign key constraints
+            db.execSQL("PRAGMA foreign_keys=ON;");
+        }
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -105,11 +112,12 @@ public class ChiTietPhieuNhapDatabase extends SQLiteOpenHelper {
                 + COLUMN_SOLUONG + " INTEGER NOT NULL,"
                 +"PRIMARY KEY (" + COLUMN_SOPHIEU +","+ COLUMN_MAVT+"),"
                 + "FOREIGN KEY("+ COLUMN_MAVT +") REFERENCES VATTU("+ COLUMN_MAVT +"), "
-                + "FOREIGN KEY("+COLUMN_SOPHIEU+") REFERENCES CAPPHAT("+COLUMN_SOPHIEU+") );";
+                + "FOREIGN KEY("+COLUMN_SOPHIEU+") REFERENCES CAPPHAT("+COLUMN_SOPHIEU+") "
+                + "ON UPDATE RESTRICT "
+                + "ON DELETE RESTRICT );";
 
         // Execute script.
         db.execSQL(script);
-        db.close();
     }
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
