@@ -227,11 +227,19 @@ public class VatTuDatabase extends SQLiteOpenHelper {
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
         // db.delete ( Tên bàng, string các điều kiện lọc - dùng ? để xác định, string[] từng phần tử trong string[] sẽ nạp vào ? );
-        return db.delete(
-                VatTuDatabase.TABLE_NAME
-                ,VatTuDatabase.COLUMN_MAVT +"=?"
-                ,  new String[] { String.valueOf(vatTu.getMaVt()) }
-        );
+        db.beginTransaction();
+        try{
+            return db.delete(
+                    VatTuDatabase.TABLE_NAME
+                    ,VatTuDatabase.COLUMN_MAVT +"=?"
+                    ,  new String[] { String.valueOf(vatTu.getMaVt()) }
+            );
+        }catch (Exception e){
+            Log.d(TAG, "Error while trying to delete VAT TU");
+            return -1;
+        }finally {
+            db.endTransaction();
+        }
     }
     public long deleteAll(){
         SQLiteDatabase db = this.getWritableDatabase();

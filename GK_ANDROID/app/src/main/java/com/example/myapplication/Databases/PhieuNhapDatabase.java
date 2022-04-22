@@ -219,11 +219,19 @@ public class PhieuNhapDatabase extends SQLiteOpenHelper {
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
         // db.delete ( Tên bàng, string các điều kiện lọc - dùng ? để xác định, string[] từng phần tử trong string[] sẽ nạp vào ? );
-        return db.delete(
-                PhieuNhapDatabase.TABLE_NAME
-                , PhieuNhapDatabase.COLUMN_SOPHIEU +"=?"
-                ,  new String[] { String.valueOf(phieuNhap.getSoPhieu()) }
-        );
+        db.beginTransaction();
+        try{
+            return db.delete(
+                    PhieuNhapDatabase.TABLE_NAME
+                    , PhieuNhapDatabase.COLUMN_SOPHIEU +"=?"
+                    ,  new String[] { String.valueOf(phieuNhap.getSoPhieu()) }
+            );
+        }catch (Exception e){
+            Log.d(TAG, "Error while trying to delete PHIEU NHAP");
+            return -1;
+        }finally {
+            db.endTransaction();
+        }
     }
     public long deleteAll(){
         SQLiteDatabase db = this.getWritableDatabase();

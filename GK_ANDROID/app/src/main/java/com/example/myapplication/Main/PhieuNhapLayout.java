@@ -261,7 +261,7 @@ public class PhieuNhapLayout extends AppCompatActivity {
                 if (position == 0) {
                     if (phieunhap_table_list.getChildCount() < phieunhaplist.size() + 1) {
                         PK_spinner_maPK = "All";
-                        // Nếu có sort trước đó làm cho số nhân viên nhỏ hơn số nhân viên tổng thì mới sort lại theo all
+                        // Nếu có sort trước đó làm cho số Phiếu nhập nhỏ hơn số Phiếu nhập tổng thì mới sort lại theo all
                         TableRow tr = (TableRow) phieunhap_table_list.getChildAt(0);
                         phieunhap_table_list.removeAllViews();
                         phieunhap_table_list.addView(tr);
@@ -355,16 +355,24 @@ public class PhieuNhapLayout extends AppCompatActivity {
                     createDialog(R.layout.popup_phieunhap);
                     // Control
                     setControlDialog();
-                    showLabel.setText("Xóa thông tin nhân viên");
+                    showLabel.setText("Xóa thông tin Phiếu nhập");
                     showConfirm.setText("Bạn có muốn xóa hàng này không?");
                     // Event
                     setEventDialog(v);
                     int index = 0;
-                    for (int i = 0; i < ctphieunhaplist.size(); i++) {
-                        // Nếu thằng được focus có mã PB trùng với PB trong list thì break
-                        if (ctphieunhaplist.get(i).getSoPhieu().trim().equals(focusMaPN.toString().trim())) {
-                            index = i;
-                            break;
+                    for (int i = 0; i < phieunhaplist.size(); i++) {
+                        // Nếu thằng được focus có mã PK trùng với PB trong list thì break
+                        String maPN = phieunhaplist.get(i).getSoPhieu().trim();
+                        String maPNF = focusMaPN.getText().toString().trim();
+                        if (maPN.equals(maPNF)) {
+                            for (int k = 0; k < phongkholist.size(); k++) {
+                                String makPn = phieunhaplist.get(i).getMaK().trim();
+                                String makS = phongkholist.get(k).getMapk().trim();
+                                if (makPn.equals(makS)) {
+                                    index = k;
+                                    break;
+                                }
+                            }
                         }
                     }
                     int[] date = StringtoIntDate(focusNLPN.getText().toString().trim());
