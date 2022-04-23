@@ -412,9 +412,9 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
 
                 inputSLVT.setText(focusSL.getText());
                 int pn = 0, vt = 0;
-                chitietpn_list = chitietpnDB.select();
-                for (int i = 0; i < chitietpn_list.size(); i++){
-                    String maPNlist = chitietpn_list.get(i).getSoPhieu();
+                phieunhap_list = phieunhapDB.select();
+                for (int i = 0; i < phieunhap_list.size(); i++){
+                    String maPNlist = phieunhap_list.get(i).getSoPhieu();
                     String maPN = focusMaPN.getText().toString().trim();
                     if (maPNlist.equalsIgnoreCase(maPN)){
                         pn = i;break;
@@ -445,9 +445,9 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
 
                 inputSLVT.setText(focusSL.getText());
                 int pn = 0, vt = 0;
-                chitietpn_list = chitietpnDB.select();
-                for (int i = 0; i < chitietpn_list.size(); i++){
-                    String maPNlist = chitietpn_list.get(i).getSoPhieu();
+                phieunhap_list = phieunhapDB.select();
+                for (int i = 0; i < phieunhap_list.size(); i++){
+                    String maPNlist = phieunhap_list.get(i).getSoPhieu();
                     String maPN = focusMaPN.getText().toString().trim();
                     if (maPNlist.equalsIgnoreCase(maPN)){
                         pn = i;break;
