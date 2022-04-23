@@ -412,8 +412,11 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
 
                 inputSLVT.setText(focusSL.getText());
                 int pn = 0, vt = 0;
+                chitietpn_list = chitietpnDB.select();
                 for (int i = 0; i < chitietpn_list.size(); i++){
-                    if (chitietpn_list.get(i).getSoPhieu().equalsIgnoreCase(focusMaPN.getText().toString().trim())){
+                    String maPNlist = chitietpn_list.get(i).getSoPhieu();
+                    String maPN = focusMaPN.getText().toString().trim();
+                    if (maPNlist.equalsIgnoreCase(maPN)){
                         pn = i;break;
                     }
                 }
@@ -442,8 +445,11 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
 
                 inputSLVT.setText(focusSL.getText());
                 int pn = 0, vt = 0;
+                chitietpn_list = chitietpnDB.select();
                 for (int i = 0; i < chitietpn_list.size(); i++){
-                    if (chitietpn_list.get(i).getSoPhieu().equalsIgnoreCase(focusMaPN.getText().toString().trim())){
+                    String maPNlist = chitietpn_list.get(i).getSoPhieu();
+                    String maPN = focusMaPN.getText().toString().trim();
+                    if (maPNlist.equalsIgnoreCase(maPN)){
                         pn = i;break;
                     }
                 }
@@ -862,7 +868,7 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
         showConfirm = dialog.findViewById(R.id.CP_showConfirm);
         showLabel = dialog.findViewById(R.id.CP_showLabel);
 
-        cpInsertBtn = dialog.findViewById(R.id.CP_insertBtn);
+
         PN_spinner_mini = dialog.findViewById(R.id.CP_PNSpinner_mini);
         VT_spinner_mini = dialog.findViewById(R.id.CP_VTSpinner_mini);
 
@@ -924,6 +930,8 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
                         editBtn.setVisibility(View.INVISIBLE);
                         delBtn.setVisibility(View.INVISIBLE);
                         previewVTBtn.setVisibility(View.INVISIBLE);
+                        PN_spinner_mini_maPN = null;
+                        VT_spinner_mini_maVT = null;
 
                         success = true;
                     }
@@ -945,6 +953,9 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
                         editBtn.setVisibility(View.INVISIBLE);
                         delBtn.setVisibility(View.INVISIBLE);
                         previewVTBtn.setVisibility(View.INVISIBLE);
+
+                        PN_spinner_mini_maPN = null;
+                        VT_spinner_mini_maVT = null;
 
                         success = true;
                     }

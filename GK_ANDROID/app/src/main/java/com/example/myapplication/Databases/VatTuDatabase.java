@@ -22,10 +22,10 @@ public class VatTuDatabase extends SQLiteOpenHelper {
     private static final String TAG = "SQLite";
 
     // Database Version
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "GiuaKi.db";
+    private static final String DATABASE_NAME = "QLPK.db";
 
     // Database Path
     private static String DATABASE_PATH;

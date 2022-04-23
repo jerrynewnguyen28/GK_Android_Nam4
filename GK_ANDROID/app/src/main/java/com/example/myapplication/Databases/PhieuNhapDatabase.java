@@ -25,10 +25,10 @@ public class PhieuNhapDatabase extends SQLiteOpenHelper {
     private static final String TAG = "SQLite";
 
     // Database Version
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "GiuaKi.db";
+    private static final String DATABASE_NAME = "QLPK.db";
 
     // Database Path
     private static String DATABASE_PATH;
@@ -219,7 +219,7 @@ public class PhieuNhapDatabase extends SQLiteOpenHelper {
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
         // db.delete ( Tên bàng, string các điều kiện lọc - dùng ? để xác định, string[] từng phần tử trong string[] sẽ nạp vào ? );
-        db.beginTransaction();
+        //db.beginTransaction();
         try{
             return db.delete(
                     PhieuNhapDatabase.TABLE_NAME
@@ -230,7 +230,7 @@ public class PhieuNhapDatabase extends SQLiteOpenHelper {
             Log.d(TAG, "Error while trying to delete PHIEU NHAP");
             return -1;
         }finally {
-            db.endTransaction();
+            //db.endTransaction();
         }
     }
     public long deleteAll(){

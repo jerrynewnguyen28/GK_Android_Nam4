@@ -265,6 +265,7 @@ public class PhieuNhapLayout extends AppCompatActivity {
                         TableRow tr = (TableRow) phieunhap_table_list.getChildAt(0);
                         phieunhap_table_list.removeAllViews();
                         phieunhap_table_list.addView(tr);
+                        phieunhaplist = phieunhapDB.select();
                         // Tag sẽ bắt đầu ở 1 vì phải cộng thêm thằng example đã có sẵn
                         for (int i = 0; i < phieunhaplist.size(); i++) {
                             PhieuNhap pn = phieunhaplist.get(i);
@@ -282,6 +283,7 @@ public class PhieuNhapLayout extends AppCompatActivity {
                     TableRow tr = (TableRow) phieunhap_table_list.getChildAt(0);
                     phieunhap_table_list.removeAllViews();
                     phieunhap_table_list.addView(tr);
+                    phieunhaplist = phieunhapDB.select();
                     for (int i = 0; i < phieunhaplist.size(); i++) {
                         PhieuNhap pn = phieunhaplist.get(i);
                         if (pn.getMaK().trim().equals(mapk.trim())) {
@@ -528,6 +530,7 @@ public class PhieuNhapLayout extends AppCompatActivity {
                         focusRow = null;
                         focusMaPN = null;
                         focusNLPN = null;
+                        PK_spinner_mini_maPK = null;
                         success = true;
                     }
                     break;
@@ -586,7 +589,7 @@ public class PhieuNhapLayout extends AppCompatActivity {
                         PhieuNhap pn = new PhieuNhap(
                                 focusMaPN.getText().toString().trim(),
                                 formatDate(focusNLPN.getText().toString().trim(), true),
-                                PK_spinner_maPK.trim());
+                                PK_spinner_mini_maPK.trim());
                         boolean del = false;
                         if (phieunhapDB.delete(pn) == -1) break;
                         if (indexofRow == phieunhap_table_list.getChildCount() - 1) {
@@ -611,6 +614,7 @@ public class PhieuNhapLayout extends AppCompatActivity {
                         focusRow = null;
                         focusMaPN = null;
                         focusNLPN = null;
+                        PK_spinner_mini_maPK = null;
                         success = true;
                     }
                     break;

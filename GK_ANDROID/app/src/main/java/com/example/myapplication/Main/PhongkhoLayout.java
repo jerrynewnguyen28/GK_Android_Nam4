@@ -341,9 +341,6 @@ public class PhongkhoLayout extends AppCompatActivity {
         yesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                  showMPKError.setVisibility(View.VISIBLE);
-                  showTPKError.setVisibility(View.VISIBLE);
-                  showResult.setVisibility(View.VISIBLE);
                 boolean success = false;
                 switch (view.getId()) {
                     case R.id.PK_insertBtn: {

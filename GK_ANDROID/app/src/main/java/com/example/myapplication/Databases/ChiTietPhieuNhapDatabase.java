@@ -23,10 +23,10 @@ public class ChiTietPhieuNhapDatabase extends SQLiteOpenHelper {
     private static final String TAG = "SQLite";
 
     // Database Version
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "GiuaKi.db";
+    private static final String DATABASE_NAME = "QLPK.db";
 
     // Database Path
     private static String DATABASE_PATH;
@@ -262,7 +262,7 @@ public class ChiTietPhieuNhapDatabase extends SQLiteOpenHelper {
                 + "CHITIETCAPPHAT, VATTU, CAPPHAT"
                 + " WHERE VATTU.MAVT = CHITIETCAPPHAT.MAVT AND \n" +
                 "CHITIETCAPPHAT.SOPHIEU = CAPPHAT.SOPHIEU\n" +
-                "AND CAPPHAT.MAK = '" + maPK +"'GROUP BY VATTU.MAVT"
+                "AND CAPPHAT.MAPK = '" + maPK +"'GROUP BY VATTU.MAVT"
                 ;
         Cursor cursor = db.rawQuery(sql, null);
         return getListResult(cursor);
@@ -274,7 +274,7 @@ public class ChiTietPhieuNhapDatabase extends SQLiteOpenHelper {
                 + "CHITIETCAPPHAT, VATTU, CAPPHAT"
                 + " WHERE VATTU.MAVT = CHITIETCAPPHAT.MAVT AND \n" +
                 "CHITIETCAPPHAT.SOPHIEU = CAPPHAT.SOPHIEU\n" +
-                "AND CAPPHAT.MAK = '" + maPK + "' AND CHITIETCAPPHAT.SOPHIEU = '"+ sophieu
+                "AND CAPPHAT.MAPK = '" + maPK + "' AND CHITIETCAPPHAT.SOPHIEU = '"+ sophieu
                 +"' AND CHITIETCAPPHAT.MAVT = '" + mavt+
                 "' GROUP BY VATTU.MAVT"
                 ;
@@ -287,7 +287,7 @@ public class ChiTietPhieuNhapDatabase extends SQLiteOpenHelper {
         String sql = "SELECT CHITIETCAPPHAT.SOPHIEU, CAPPHAT.NGAYLAP\n" +
                 "FROM CHITIETCAPPHAT, CAPPHAT\n" +
                 "WHERE CAPPHAT.SOPHIEU = CHITIETCAPPHAT.SOPHIEU\n" +
-                "AND CHITIETCAPPHAT.MAVT = '" + maVT+"' AND CAPPHAT.MAK = '" + maPK+"'"
+                "AND CHITIETCAPPHAT.MAVT = '" + maVT+"' AND CAPPHAT.MAPK = '" + maPK+"'"
                 ;
         Cursor cursor = db.rawQuery(sql, null);
         return getListResult(cursor);
