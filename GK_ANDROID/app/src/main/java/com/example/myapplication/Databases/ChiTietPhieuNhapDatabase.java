@@ -292,4 +292,15 @@ public class ChiTietPhieuNhapDatabase extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sql, null);
         return getListResult(cursor);
     }
+    public List<String> selectSumSL_IndexPK(String maPK){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT sum(CHITIETCAPPHAT.SOLUONG) AS TONGSL\n" +
+                "FROM CHITIETCAPPHAT, PHONGKHO, CAPPHAT\n" +
+                "WHERE CHITIETCAPPHAT.SOPHIEU = CAPPHAT.SOPHIEU\n" +
+                "AND CAPPHAT.MAPK = PHONGKHO.MAPK\n" +
+                "AND CAPPHAT.MAPK = '"+maPK +"'"
+                ;
+        Cursor cursor = db.rawQuery(sql, null);
+        return getListResult(cursor);
+    }
 }

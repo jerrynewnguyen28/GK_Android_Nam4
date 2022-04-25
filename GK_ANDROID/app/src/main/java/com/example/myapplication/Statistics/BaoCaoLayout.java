@@ -75,16 +75,16 @@ public class BaoCaoLayout extends AppCompatActivity {
     TextView dateView,
             totalMoneyView;
 
-    // CapPhat
+    // ChitietPhieuNhap
     ChiTietPhieuNhapDatabase chiTietPhieuNhapDatabase;
 
-    // NhanVien
+    // PhieuNhap
     PhieuNhapDatabase phieuNhapDatabase;
     List<PhieuNhap> phieuNhapList;
     ArrayList<String> phieunhapStringList;
     PhieuNhap selectedPhieuNhap;
 
-    // PhongBan
+    // PhongKho
     PhongKhoDatabase phongKhoDatabase;
     List<PhongKho> phongKhoList;
     ArrayList<String> tenPhongKhoList;

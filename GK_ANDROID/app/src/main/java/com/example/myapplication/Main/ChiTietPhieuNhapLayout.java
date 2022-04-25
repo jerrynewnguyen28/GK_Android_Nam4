@@ -41,6 +41,7 @@ import com.example.myapplication.Entities.Rows;
 import com.example.myapplication.Entities.VatTu;
 import com.example.myapplication.R;
 import com.example.myapplication.Statistics.BaoCaoLayout;
+import com.example.myapplication.Statistics.ThongKeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -491,14 +492,14 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
                 startActivity( intent );
             }
         });
-//        navTK.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //Intent intent = new Intent(CapphatVTLayout.this, ThongkeLayout.class);
-//                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-//                //startActivity( intent );
-//            }
-//        });
+        navTK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChiTietPhieuNhapLayout.this, ThongKeLayout.class);
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                startActivity( intent );
+            }
+        });
     }
 
     public void transferLayout(String maPK) {

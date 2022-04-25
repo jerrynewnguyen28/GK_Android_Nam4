@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-
-        android:usesCleartextTraffic="true"
-
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplication">
+        android:theme="@style/Theme.MyApplication"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".Statistics.ThongKeLayout"
+            android:exported="false" />
 
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        <activity android:name=".Main.VattuLayout" />
 
-        <activity android:name=".Main.VattuLayout"></activity>
-        <activity android:name=".Main.NhanvienLayout"></activity>
-        <activity android:name=".Main.PhieuNhapLayout"></activity>
-        <activity android:name=".Main.PhongkhoLayout"></activity>
-        <activity android:name=".Main.ChiTietPhieuNhapLayout"></activity>
-        <activity android:name=".Statistics.BaoCaoLayout"></activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".XinChoLayout"></activity>
+        <activity android:name=".Main.NhanvienLayout" />
+        <activity android:name=".Main.PhieuNhapLayout" />
+        <activity android:name=".Main.PhongkhoLayout" />
+        <activity android:name=".Main.ChiTietPhieuNhapLayout" />
+        <activity android:name=".Statistics.BaoCaoLayout" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".XinChoLayout" />
         <activity android:name=".Welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,6 +30,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
