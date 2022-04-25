@@ -268,15 +268,15 @@ public class ChiTietPhieuNhapDatabase extends SQLiteOpenHelper {
         return getListResult(cursor);
     }
 
-    public List<String> selectVT_IndexPKForInsert(String maPK, String sophieu, String mavt){
+    public List<String> selectVT_IndexPKForBC(String maPK, String sophieu){
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT DISTINCT  VATTU.MAVT, VATTU.TENVT, VATTU.DVT, SUM(CHITIETCAPPHAT.SOLUONG) AS TONGSL FROM \n"
+        String sql = "SELECT DISTINCT  VATTU.MAVT, VATTU.TENVT, VATTU.DVT, SUM(CHITIETCAPPHAT.SOLUONG) AS TONGSL, (VATTU.GIANHAP * SUM(CHITIETCAPPHAT.SOLUONG)) AS TRIGIA FROM \n"
                 + "CHITIETCAPPHAT, VATTU, CAPPHAT"
                 + " WHERE VATTU.MAVT = CHITIETCAPPHAT.MAVT AND \n" +
                 "CHITIETCAPPHAT.SOPHIEU = CAPPHAT.SOPHIEU\n" +
-                "AND CAPPHAT.MAPK = '" + maPK + "' AND CHITIETCAPPHAT.SOPHIEU = '"+ sophieu
-                +"' AND CHITIETCAPPHAT.MAVT = '" + mavt+
-                "' GROUP BY VATTU.MAVT"
+                "AND CAPPHAT.MAPK = '" + maPK
+                +"' AND CAPPHAT.SOPHIEU = '"+ sophieu
+                +"'GROUP BY VATTU.MAVT"
                 ;
         Cursor cursor = db.rawQuery(sql, null);
         return getListResult(cursor);

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -22,7 +23,9 @@
         <activity android:name=".Main.PhieuNhapLayout"></activity>
         <activity android:name=".Main.PhongkhoLayout"></activity>
         <activity android:name=".Main.ChiTietPhieuNhapLayout"></activity>
+        <activity android:name=".Statistics.BaoCaoLayout"></activity>
         <activity android:name=".MainActivity"></activity>
+        <activity android:name=".XinChoLayout"></activity>
         <activity android:name=".Welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

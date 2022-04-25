@@ -21,7 +21,23 @@ public class PhieuNhap {
                 ", maK='" + maK + '\'' +
                 '}';
     }
+    public String toSpinnerString() {
+        return soPhieu+", "+maK+", "+formatDate(ngayLap, false);
+    }
 
+    public String formatDate(String str, boolean toSQL ){
+        String[] date ;
+        String result = "";
+        if( toSQL ){
+            date = str.split("/");
+            result = date[2] +"-"+ date[1] +"-"+ date[0];
+        }else{
+            date = str.split("-");
+            result = date[2] +"/"+ date[1] +"/"+ date[0];
+        }
+
+        return result;
+    }
     public String getSoPhieu() {
         return soPhieu;
     }

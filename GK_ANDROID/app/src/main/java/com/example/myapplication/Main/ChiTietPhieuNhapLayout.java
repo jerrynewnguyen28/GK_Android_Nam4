@@ -2,6 +2,7 @@ package com.example.myapplication.Main;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -39,6 +40,7 @@ import com.example.myapplication.Entities.PhongKho;
 import com.example.myapplication.Entities.Rows;
 import com.example.myapplication.Entities.VatTu;
 import com.example.myapplication.R;
+import com.example.myapplication.Statistics.BaoCaoLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -476,19 +478,19 @@ public class ChiTietPhieuNhapLayout extends AppCompatActivity {
                 finish();
             }
         });
-//        navBC.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent;
-//                if( selectedPK != null ){}
-//                    //intent = new Intent(CapphatVTLayout.this, BaocaoVTLayout.class);
-//                else
-//                    //intent = new Intent(CapphatVTLayout.this, BaocaoVTAllLayout.class);
-//                if( totalPrice != 0 ) totalMoney = totalPrice;  // with selectedPB
-//                overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
-//                //startActivity( intent );
-//            }
-//        });
+        navBC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                if( selectedPK != null )
+                    intent = new Intent(ChiTietPhieuNhapLayout.this, BaoCaoLayout.class);
+                else
+                    intent = new Intent(ChiTietPhieuNhapLayout.this, BaoCaoLayout.class);
+                if( totalPrice != 0 ) totalMoney = totalPrice;  // with selectedPB
+                overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+                startActivity( intent );
+            }
+        });
 //        navTK.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

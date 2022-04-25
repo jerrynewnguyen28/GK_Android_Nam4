@@ -184,6 +184,46 @@ public class PhieuNhapDatabase extends SQLiteOpenHelper {
         return list_capphat;
     }
 
+    public List<PhieuNhap> select(PhongKho phongKho){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Define a projection that specifies which columns from the database
+        // you will actually use after this query.
+        String[] projection = {
+                COLUMN_SOPHIEU,
+                COLUMN_NGAYCAP,
+                COLUMN_MAK
+        };
+
+        // How you want the results sorted in the resulting Cursor
+//        String sortOrder = PhongBanDatabase.COLUMN_ID + " DESC";
+        String sortOrder = null;
+        String selection = "MAPK = ?";
+        String[] selectionArgs = new String[]{phongKho.getMapk()};
+
+        Cursor cursor = db.query(
+                TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                sortOrder               // The sort order
+        );
+
+        List<PhieuNhap> list_capphat = new ArrayList<>();
+
+        while(cursor.moveToNext()){
+            list_capphat.add(new PhieuNhap(
+                    cursor.getString(0),
+                    cursor.getString(1),
+                    cursor.getString(2)
+            ));
+        }
+
+        return list_capphat;
+    }
+
     public long insert(PhieuNhap phieuNhap){
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
@@ -238,48 +278,11 @@ public class PhieuNhapDatabase extends SQLiteOpenHelper {
         return db.delete(PhieuNhapDatabase.TABLE_NAME,null,null);
     }
 
-    public List<String> getListResult(Cursor cursor){
-        List<String> results = new ArrayList<>();
-        while(cursor.moveToNext()){
-            for(int i = 0; i < cursor.getColumnCount(); i++){
-                results.add(cursor.getString(i));
-            }
-        }
-        return results;
-    }
-
 //    @Override
 //    public void onConfigure(SQLiteDatabase db) {
 //        db.setForeignKeyConstraintsEnabled(true);
 //        super.onConfigure(db);
 //    }
-    public List<String> select_listVT_withPK(String maPK ){
-        SQLiteDatabase db = this.getReadableDatabase();
-        String sql =
-                "SELECT DISTINCT  L.MAVT, L.TENVT, L.DVT, L.GIANHAP*SUM(R.SOLUONG) AS TRIGIA FROM \n" +
-                        "( SELECT * FROM VATTU ) AS L\n" +
-                        "JOIN\n" +
-                        "-- NÀY LÀ TÌM NHỮNG NHÂN VIÊN CÓ MẶT TRONG CẤP PHÁT ( KÈM THEO MAPB )\n" +
-                        " (\tSELECT CP.MAVT, CP.SOLUONG, CP.MANV ,NV.HOTEN,NV.MAPK FROM CAPPHAT AS CP JOIN NHANVIEN AS NV ON CP.MANV = NV.MANV ) AS R\n" +
-                        "ON L.MAVT = R.MAVT WHERE R.MAPK = '"+maPK+"'\n" +
-                        "GROUP BY R.MAVT";
-        Cursor cursor = db.rawQuery(sql, null);
-        return getListResult(cursor);
-    }
-
-    public List<String> select_listNV_withVT_andPK(String maPK, String maVT ){
-        SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT DISTINCT  R.MANV , R.HOTEN, SUM(SOLUONG) AS SOLUONGMUON FROM \n" +
-                "( SELECT * FROM VANPHONGPHAM ) AS L\n" +
-                "JOIN\n" +
-                "-- NÀY LÀ TÌM NHỮNG NHÂN VIÊN CÓ MẶT TRONG CẤP PHÁT ( KÈM THEO MAPB )\n" +
-                " (\tSELECT CP.MAVT, CP.SOLUONG, CP.MANV ,NV.HOTEN,NV.MAPK FROM CAPPHAT AS CP JOIN NHANVIEN AS NV ON CP.MANV = NV.MANV ) AS R\n" +
-                "ON L.MAVT = R.MAVT WHERE R.MAPK = '"+maPK+"' AND R.MAVT = '"+maVT+"'"  +
-                "GROUP BY R.MAVT, R.MANV";
-        Cursor cursor = db.rawQuery(sql, null);
-        return getListResult(cursor);
-    }
-
 
     public String formatDate(String str, boolean toSQL ){
         String[] date ;
