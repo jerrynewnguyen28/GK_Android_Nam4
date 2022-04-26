@@ -130,7 +130,7 @@ public class PhieuNhapLayout extends AppCompatActivity {
 
     private void filter(String toString) {
         TableRow tr = (TableRow) phieunhap_table_list.getChildAt(0);
-        int dem =0;
+        int dem =1;
         phieunhap_table_list.removeAllViews();
         phieunhap_table_list.addView(tr);
         for (int k = 0; k < phieunhaplist.size(); k++) {
@@ -343,7 +343,24 @@ public class PhieuNhapLayout extends AppCompatActivity {
 
                     int[] date = StringtoIntDate(focusNLPN.getText().toString().trim());
 
+                    int index = 0;
+                    for (int i = 0; i < phieunhaplist.size(); i++) {
+                        // Nếu thằng được focus có mã PK trùng với PB trong list thì break
+                        String maPN = phieunhaplist.get(i).getSoPhieu().trim();
+                        String maPNF = focusMaPN.getText().toString().trim();
+                        if (maPN.equals(maPNF)) {
+                            for (int k = 0; k < phongkholist.size(); k++) {
+                                String makPn = phieunhaplist.get(i).getMaK().trim();
+                                String makS = phongkholist.get(k).getMapk().trim();
+                                if (makPn.equals(makS)) {
+                                    index = k;
+                                    break;
+                                }
+                            }
+                        }
+                    }
                     inputMaPN.setText(focusMaPN.getText());
+                    PK_spinner_mini.setSelection(index);
                     datepickerNLPN.updateDate(date[2], date[1] - 1, date[0]);
                     inputMaPN.setEnabled(false);
 
@@ -741,7 +758,7 @@ public class PhieuNhapLayout extends AppCompatActivity {
 
         maPN.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.FILL_PARENT, 10.0f));
         maPN.setMaxWidth(DPtoPix(100));
-        maPN.setPadding(0, 0, 0, 0);
+        maPN.setPadding(20, 20, 20, 20);
         maPN.setText(pn.getSoPhieu());
 
 

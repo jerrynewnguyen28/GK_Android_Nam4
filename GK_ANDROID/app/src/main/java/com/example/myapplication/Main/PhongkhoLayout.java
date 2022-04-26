@@ -103,7 +103,7 @@ public class PhongkhoLayout extends AppCompatActivity {
 
     private void filter(String toString) {
         TableRow tr = (TableRow) phongkho_table_list.getChildAt(0);
-        int dem =0;
+        int dem =1;
         phongkho_table_list.removeAllViews();
         phongkho_table_list.addView(tr);
         for (int k = 0; k < phongkholist.size(); k++) {
@@ -245,6 +245,8 @@ public class PhongkhoLayout extends AppCompatActivity {
                     showConfirm.setText("Bạn có muốn xóa hàng này không?");
                     // Event
                     setEventDialog(v);
+                    String mapk = focusMaPK.getText().toString();
+                    String tenpk = focusTenPK.getText().toString();
                     inputMaPK.setText(focusMaPK.getText());
                     inputTenPK.setText(focusTenPK.getText());
                     inputMaPK.setEnabled(false);

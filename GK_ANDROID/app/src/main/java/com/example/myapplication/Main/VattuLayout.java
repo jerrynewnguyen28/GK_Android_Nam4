@@ -138,7 +138,7 @@ public class VattuLayout extends AppCompatActivity {
 
     private void filter(String toString) {
         TableRow tr = (TableRow) vt_table_list.getChildAt(0);
-        int dem =0;
+        int dem =1;
         vt_table_list.removeAllViews();
         vt_table_list.addView(tr);
         for (int k = 0; k < vtlist.size(); k++) {
