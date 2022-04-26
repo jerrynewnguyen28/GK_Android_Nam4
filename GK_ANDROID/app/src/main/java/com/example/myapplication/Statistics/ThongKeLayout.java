@@ -14,6 +14,7 @@ import com.example.myapplication.Entities.PhongKho;
 import com.example.myapplication.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -74,29 +75,34 @@ public class ThongKeLayout extends AppCompatActivity {
         ArrayList<PieEntry> pieEntries = new ArrayList<>();
         for (int i = 0; i < phongKhoList.size(); i++){
             String mapk = phongKhoList.get(i).getMapk().trim();
+            String tenpk = phongKhoList.get(i).getTenpk().trim();
             List<String> str = chiTietPhieuNhapDatabase.selectSumSL_IndexPK(mapk);
             String str1 = str.get(0) == null? "0": str.get(0);
             float value = Float.valueOf(str1);
 
-            BarEntry barEntry = new BarEntry(i, value);
+            BarEntry barEntry = new BarEntry(i, value, tenpk);
 
-            PieEntry pieEntry = new PieEntry(i, value);
+            PieEntry pieEntry = new PieEntry(value, tenpk);
 
             barEntries.add(barEntry);
 
             pieEntries.add(pieEntry);
         }
 
+
         BarDataSet barDataSet = new BarDataSet(barEntries, "Phòng Kho");
+        barDataSet.setValueTextSize(12f);
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        barDataSet.setDrawValues(false);
         barChart.setData(new BarData(barDataSet));
         barChart.animateY(5000);
         barChart.getDescription().setText("Tổng Số lượng Vật tư mỗi Phòng Kho");
+        barChart.getDescription().setTextSize(12f);
         barChart.getDescription().setTextColor(Color.BLUE);
+//        barChart.getDescription().setEnabled(false);
 
-        PieDataSet pieDataSet = new PieDataSet(pieEntries, "Phòng Kho");
+        PieDataSet pieDataSet = new PieDataSet(pieEntries, ("Phòng Kho"));
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieDataSet.setValueTextSize(12f);
         pieChart.setData(new PieData(pieDataSet));
         pieChart.animateXY(5000,5000);
         pieChart.getDescription().setEnabled(false);
